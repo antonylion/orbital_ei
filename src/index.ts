@@ -1,11 +1,6 @@
-console.log("Hello world!");
-// src/index.ts
 import express, { Express, Request, Response } from "express";
-import dotenv from "dotenv";
 import orders from './routes/orders';
 import images from './routes/images';
-
-dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
