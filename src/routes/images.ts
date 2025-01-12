@@ -14,4 +14,16 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
+router.get('/:id', async (req: Request, res: Response) => {
+  try {
+    let imageId = req.params.id;
+    let queryToGetImageDetail = 'SELECT * FROM images WHERE catalog_id = $1';
+    const result = await pool.query(queryToGetImageDetail, [imageId]);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error executing query:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 export default router;
