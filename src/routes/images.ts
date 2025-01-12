@@ -1,27 +1,17 @@
-import express, { Express, Request, Response, Router } from 'express';
-
-const todos = [
-    {
-      id: 1,
-      desc: "Write Python code",
-      completed: false,
-    },
-    {
-      id: 2,
-      desc: "Write JavaScript code",
-      completed: true,
-    },
-    {
-        id: 3,
-        desc: "Write C code",
-        completed: false,
-    },
-];
+import { Router, Request, Response } from 'express';
+import pool from '../db';
 
 const router = Router();
 
-router.get('/', (req: Request, res: Response) => {
-    res.json(todos);
-})
+router.get('/', async (req: Request, res: Response) => {
+  try {
+    // Use the shared pool to query the database
+    const result = await pool.query('SELECT * FROM images');
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error executing query:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 export default router;
