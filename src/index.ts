@@ -3,6 +3,8 @@ console.log("Hello world!");
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import { Client } from 'pg';
+import orders from './routes/orders';
+import images from './routes/images';
 
 dotenv.config();
 
@@ -19,10 +21,10 @@ app.listen(port, () => {
 
 const client = new Client({
     user: process.env.DB_USER,
-    host: process.env.DB_HOST,         // database host (usually localhost)
-    database: process.env.DB_NAME, // your database name
-    password: process.env.DB_PSWD, // your database password
-    port: Number(process.env.DB_PORT),                // default PostgreSQL port
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PSWD,
+    port: Number(process.env.DB_PORT),
 });
 
 async function connectAndQuery() {
@@ -44,4 +46,7 @@ async function connectAndQuery() {
     }
 }
 
-connectAndQuery();
+app.use('/orders', orders);
+app.use('/images', images);
+
+//connectAndQuery();
