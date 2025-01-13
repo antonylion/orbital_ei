@@ -28,9 +28,12 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
+    "@types/geojson": "^7946.0.15",
     "@types/pg": "^8.11.10",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "express-validator": "^7.2.1",
+    "geojson": "^0.5.0",
     "pg": "^8.13.1"
   }
 }
