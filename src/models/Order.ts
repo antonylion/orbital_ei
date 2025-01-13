@@ -4,10 +4,10 @@ import { Order, PaymentMethod } from '../types';
 export class OrderModel {
     constructor(private pool: Pool) {}
 
-    async create(orderId: string, imageId: string, customerEmail: string, createdAt: string, paymentMenthod: PaymentMethod): Promise<Order> {
+    async create(imageId: Number, customerEmail: string, createdAt: string, paymentMenthod: PaymentMethod): Promise<Order> {
         const result = await this.pool.query(
-            'INSERT INTO orders (order_id, image_id, customer_email, created_at, payment_method) VALUES ($1, $2, $3, $4, $5)',
-            [orderId, imageId, customerEmail, createdAt, paymentMenthod]
+            'INSERT INTO orders (image_id, customer_email, created_at, payment_method) VALUES ($1, $2, $3, $4)',
+            [imageId, customerEmail, createdAt, paymentMenthod]
         );
         return result.rows[0];
     }

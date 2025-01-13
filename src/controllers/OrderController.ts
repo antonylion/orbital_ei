@@ -6,7 +6,7 @@ export class OrderController {
     constructor(private model: OrderModel) {}
     
     createOrder = async (req: Request, res: Response, next: NextFunction) => {
-        const { order_id, image_id, customer_email, created_at, payment_method } = req.body;
+        const { image_id, customer_email, created_at, payment_method } = req.body;
         //customer_email.isEmail().withMessage('Valid email required');
         // paymentMethod -> isValidPaymentMethod
         const errors = validationResult(req);
@@ -15,7 +15,6 @@ export class OrderController {
         }
         try {
             const order = await this.model.create(
-                order_id,
                 image_id,
                 customer_email,
                 created_at,

@@ -1,5 +1,5 @@
 export interface SatelliteImage {
-    catalogID: string;
+    catalogID: number;
     acquisitionDateStart: Date;
     acquisitionDateEnd: Date;
     offNadir: number;
