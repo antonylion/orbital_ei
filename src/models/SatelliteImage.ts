@@ -11,7 +11,7 @@ export class SatelliteImageModel {
         return result.rows;
     }
 
-    async getById(id: string): Promise<SatelliteImage | null> {
+    async getById(id: number): Promise<SatelliteImage | null> {
         const result = await this.pool.query(
             'SELECT *, ST_AsGeoJSON(geometry)::json as geometry FROM images WHERE catalog_id = $1',
             [id]

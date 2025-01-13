@@ -15,7 +15,22 @@ export class SatelliteImageController {
 
     getById = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const image = await this.model.getById(req.params.id);
+            const id = parseInt(req.params.id);
+            // Check if id is NaN (which happens if parsing fails)
+            if (isNaN(id)) {
+                return res.status(400).json({
+                    error: 'Invalid ID format',
+                    message: 'ID must be a number'
+                });
+            }
+            // Check if id is negative or not an integer
+            if (id < 0 || !Number.isInteger(id)) {
+                return res.status(400).json({
+                    error: 'Invalid ID value',
+                    message: 'ID must be a positive integer'
+                });
+            }
+            const image = await this.model.getById(id);
             if (!image) {
                 return res.status(404).json({ message: 'Image not found' });
             }
