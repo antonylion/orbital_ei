@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  app:
+    image: orbital-ei
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_HOST=db        # Explicitly set this to override .env
+      - DB_NAME=${DB_NAME}
+      - DB_PSWD=${DB_PSWD}
+      - DB_PORT=${DB_PORT}
+    env_file:
+      - .env
+
+  db:
+    image: postgis/postgis
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PSWD}
+      - POSTGRES_DB=${DB_NAME}
+    env_file:
+      - .env
