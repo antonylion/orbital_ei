@@ -4,6 +4,10 @@ services:
     image: orbital-ei
     ports:
       - "3000:3000"
+    volumes:
+      - .:/usr/src/app        # Mount current directory
+      - /usr/src/app/node_modules  # Prevent overwriting node_modules
+    command: npm run dev      # Override CMD to use development mode
     depends_on:
       - db
     environment:
