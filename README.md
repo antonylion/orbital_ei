@@ -11,10 +11,11 @@ Follow these steps to run the application using Docker.
 Ensure you have the following installed on your machine:
 - [Docker](https://www.docker.com/)
 - [Git](https://git-scm.com/)
+- [Node.js](https://nodejs.org/en)(for local development)
 
 ---
 
-### Steps to Run the Application
+### Quick Start
 1. **Clone the Repository**  
    Clone the Orbital_EI repository to your local machine:
    ```sh
@@ -27,14 +28,34 @@ Ensure you have the following installed on your machine:
    cd orbital_ei
    ```
 
-3. **Build the Docker Image**  
+3. **Set up environment variables**
+   ```sh
+   # Create .env file and write the following inside it:
+
+   DB_USER="postgres"
+   DB_HOST="db"
+   DB_NAME="postgres"
+   DB_PSWD="mysecretpassword"
+   DB_PORT=5432
+   ```
+
+4. **Build the Docker Image**  
    Build the Docker image for the application:
    ```sh
    docker build -t orbit-ei .
    ```
 
-4. **Start the Application**  
+5. **Start the Application**  
    Use Docker Compose to start the database (on port `5432`) and the server (on `localhost:3000`):
    ```sh
-   docker compose up
+   docker-compose up
    ```
+
+6. **Test the API**
+   ```sh
+   # Get all satellite images
+   curl http://localhost:3000/api/images
+   ```
+
+7. **Development**
+   The application will automatically reload when you make changes to the code.
