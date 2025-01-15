@@ -20,10 +20,8 @@ export class OrderModel {
         return result.rows;
     }
 
-    async getAll(): Promise<Order[]> {
-        const result = await this.pool.query(
-            'SELECT o.* FROM orders o',
-        );
+    async getAll(queryWithFilters: string, params: any[]): Promise<Order[]> {
+        const result = await this.pool.query(queryWithFilters, params);
         return result.rows;
     }
 }

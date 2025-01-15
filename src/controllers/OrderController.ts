@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { OrderModel } from '../models/Order';
 import { validationResult } from 'express-validator';
+import { OrderFilters } from '../types';
 
 export class OrderController {
     constructor(private model: OrderModel) { }
@@ -37,7 +38,41 @@ export class OrderController {
 
     getOrders = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const orders = await this.model.getAll();
+
+            const filters: OrderFilters = req.query;
+            let query = 'SELECT * FROM orders WHERE 1=1';
+            const params: any[] = [];
+            let paramCount = 1;
+
+            // Customer email filter
+            if (filters.customerEmail) {
+                query += ` AND customer_email = $${paramCount}`;
+                params.push(filters.customerEmail);
+                paramCount++;
+            }
+
+            // Date filter
+            if (filters.createdAt) {
+                query += ` AND DATE(created_at) = DATE($${paramCount})`;
+                params.push(filters.createdAt);
+                paramCount++;
+            }
+
+            // Payment method filter
+            if (filters.paymentMethod) {
+                query += ` AND payment_method = $${paramCount}`;
+                params.push(filters.paymentMethod);
+                paramCount++;
+            }
+
+            // Image id filter
+            if (filters.imageId !== undefined) {
+                query += ` AND image_id = $${paramCount}`;
+                params.push(filters.imageId);
+                paramCount++;
+            }
+
+            const orders = await this.model.getAll(query, params);
             res.json(orders);
         } catch (error) {
             next(error);

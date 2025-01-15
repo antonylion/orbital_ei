@@ -30,5 +30,12 @@ export interface Order {
     imageId: number;
     customerEmail: string;
     createdAt: Date;
-    paymentMenthod: PaymentMethod;
+    paymentMethod: PaymentMethod;
+}
+
+export interface OrderFilters {
+    customerEmail?: string;
+    createdAt?: Date;
+    paymentMethod?: number;
+    imageId?: number;
 }
