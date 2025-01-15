@@ -1228,3 +1228,33 @@ INSERT INTO orders (
     'antony.zappacosta@oulook.com',
     'PayPal'
 );
+
+INSERT INTO orders (
+	image_id,
+	customer_email,
+	payment_method
+) VALUES (
+    20,
+    'antony.zappacosta@gmail.com',
+    'Credit Card'
+);
+
+INSERT INTO orders (
+	image_id,
+	customer_email,
+	payment_method
+) VALUES (
+    13,
+    'antony.zappacosta@gmail.com',
+    'PayPal'
+);
+
+INSERT INTO orders (
+	image_id,
+	customer_email,
+	payment_method
+) VALUES (
+    23,
+    'antony.zappacosta@outlook.com',
+    'Bank Transfer'
+);
