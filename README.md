@@ -30,7 +30,7 @@ Ensure you have the following installed on your machine:
 
 3. **Set up environment variables**
    ```sh
-   # Create .env file and write the following inside it:
+   # Create .env file and write the following content:
 
    DB_USER="postgres"
    DB_HOST="db"
