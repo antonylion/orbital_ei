@@ -22,6 +22,7 @@ export interface SatelliteImageFilters {
     scanDirection?: string;
     satelliteElevation?: number;
     imageBands?: string;
+    bbox?: string;
 }
 
 export enum PaymentMethod {

@@ -2,7 +2,7 @@ import { Pool } from 'pg';
 import { SatelliteImage, SatelliteImageFilters } from '../types';
 
 export class SatelliteImageModel {
-    constructor(private pool: Pool) {}
+    constructor(private pool: Pool) { }
 
     async getAll(filters: SatelliteImageFilters): Promise<SatelliteImage[]> {
 
@@ -62,6 +62,18 @@ export class SatelliteImageModel {
             query += ` AND image_bands = $${paramCount}`;
             params.push(filters.imageBands);
             paramCount++;
+        }
+
+        // Geometry bbox filter
+        // find images within the boundaries of a specific area of interest
+        if (filters.bbox) {
+            const [minLon, minLat, maxLon, maxLat] = filters.bbox.split(',').map(Number);
+            query += ` AND ST_Intersects(
+              geometry,
+              ST_MakeEnvelope($${paramCount}, $${paramCount + 1}, $${paramCount + 2}, $${paramCount + 3}, 4326)
+            )`;
+            params.push(minLon, minLat, maxLon, maxLat);
+            paramCount += 4;
         }
 
         const result = await this.pool.query(query, params);
