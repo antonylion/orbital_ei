@@ -12,7 +12,7 @@ export class OrderModel {
         return result.rows[0];
     }
 
-    async getAll(filters: OrderFilters): Promise<Order[]> {
+    async getAll(filters: OrderFilters, page: number, limit: number): Promise<{data: Order[], total: number}> {
 
         let query = 'SELECT * FROM orders WHERE 1=1';
         const params: any[] = [];
@@ -46,7 +46,24 @@ export class OrderModel {
             paramCount++;
         }
         
-        const result = await this.pool.query(query, params);
-        return result.rows;
+
+        const offset = (page - 1) * limit;
+        // Create count query
+        const countQuery = query.replace('SELECT *', 'SELECT COUNT(*)');
+
+        // Add pagination to the main query
+        query += ` LIMIT $${paramCount} OFFSET $${paramCount + 1}`;
+        params.push(limit, offset);
+
+        // Execute both queries
+        const [countResult, dataResult] = await Promise.all([
+            this.pool.query(countQuery, params.slice(0, -2)),
+            this.pool.query(query, params)
+        ]);
+
+        return {
+            data: dataResult.rows,
+            total: parseInt(countResult.rows[0].count)
+        };
     }
 }

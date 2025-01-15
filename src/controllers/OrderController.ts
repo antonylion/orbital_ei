@@ -38,9 +38,30 @@ export class OrderController {
 
     getOrders = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const filters: OrderFilters = req.query;
-            const orders = await this.model.getAll(filters);
-            res.json(orders);
+            // Handle pagination parameters separately
+            const page = parseInt(req.query.page as string) || 1;
+            const limit = parseInt(req.query.limit as string) || 10;
+    
+            // Validate pagination parameters
+            if (page < 1 || limit < 1) {
+                return res.status(400).json({
+                    error: 'Invalid pagination parameters',
+                    message: 'Page and limit must be positive integers'
+                });
+            }
+            // Extract only the filter properties for OrderFilters
+            const { page: _, limit: __, ...filterParams } = req.query;
+            const filters: OrderFilters = filterParams;
+            const { data, total } = await this.model.getAll(filters, page, limit);
+            res.json({
+                data,
+                pagination: {
+                    currentPage: page,
+                    pageSize: limit,
+                    totalItems: total,
+                    totalPages: Math.ceil(total / limit)
+                }
+            });
         } catch (error) {
             next(error);
         }
