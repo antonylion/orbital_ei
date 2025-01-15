@@ -1,8 +1,8 @@
 import express from 'express';
 import { createPool } from './config/db';
 import { errorHandler } from './middlewares/ErrorHandler';
-import { SatelliteImageModel } from './models/SatelliteImage';
-import { OrderModel } from './models/Order';
+import { SatelliteImageModel } from './models/SatelliteImageModel';
+import { OrderModel } from './models/OrderModel';
 import { SatelliteImageController } from './controllers/SatelliteImageController';
 import { OrderController } from './controllers/OrderController';
 import { createSatelliteImageRouter } from './routes/SatelliteImageRoute';

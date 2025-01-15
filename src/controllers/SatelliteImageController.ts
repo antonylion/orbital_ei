@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { SatelliteImageModel } from '../models/SatelliteImage';
+import { SatelliteImageModel } from '../models/SatelliteImageModel';
 import { SatelliteImageFilters } from '../types';
 
 export class SatelliteImageController {
