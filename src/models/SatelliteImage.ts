@@ -4,7 +4,7 @@ import { SatelliteImage, SatelliteImageFilters } from '../types';
 export class SatelliteImageModel {
     constructor(private pool: Pool) { }
 
-    async getAll(filters: SatelliteImageFilters): Promise<SatelliteImage[]> {
+    async getAll(filters: SatelliteImageFilters, page: number, limit: number): Promise<{ data: SatelliteImage[], total: number }> {
 
         let query = 'SELECT *, ST_AsGeoJSON(geometry)::json as geometry FROM images WHERE 1=1';
         const params: any[] = [];
@@ -76,8 +76,25 @@ export class SatelliteImageModel {
             paramCount += 4;
         }
 
-        const result = await this.pool.query(query, params);
-        return result.rows;
+        const offset = (page - 1) * limit;
+        
+        // Create count query
+        const countQuery = query.replace('SELECT *, ST_AsGeoJSON(geometry)::json as geometry', 'SELECT COUNT(*)');
+
+        // Add pagination to the main query
+        query += ` LIMIT $${paramCount} OFFSET $${paramCount + 1}`;
+        params.push(limit, offset);
+
+        // Execute both queries
+        const [countResult, dataResult] = await Promise.all([
+            this.pool.query(countQuery, params.slice(0, -2)),
+            this.pool.query(query, params)
+        ]);
+
+        return {
+            data: dataResult.rows,
+            total: parseInt(countResult.rows[0].count)
+        };
     }
 
     async getById(id: number): Promise<SatelliteImage | null> {
