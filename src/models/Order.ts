@@ -12,14 +12,6 @@ export class OrderModel {
         return result.rows[0];
     }
 
-    async getAllByCustomer(customerEmail: string): Promise<Order[]> {
-        const result = await this.pool.query(
-            'SELECT o.*, si.catalog_id FROM orders o JOIN satellite_images si ON o.image_id = si.id WHERE customer_email = $1',
-            [customerEmail]
-        );
-        return result.rows;
-    }
-
     async getAll(queryWithFilters: string, params: any[]): Promise<Order[]> {
         const result = await this.pool.query(queryWithFilters, params);
         return result.rows;
