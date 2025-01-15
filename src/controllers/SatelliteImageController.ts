@@ -9,35 +9,7 @@ export class SatelliteImageController {
         try {
 
             const filters: SatelliteImageFilters = req.query;
-            let query = 'SELECT *, ST_AsGeoJSON(geometry)::json as geometry FROM images WHERE 1=1';
-            const params: any[] = [];
-            let paramCount = 1;
-
-            // Sensor filter
-            if (filters.sensor) {
-                query += ` AND sensor = $${paramCount}`;
-                params.push(filters.sensor);
-                paramCount++;
-            }
-            // Cloud coverage filter
-            if (filters.minCloudCoverage !== undefined) {
-                query += ` AND cloud_coverage >= $${paramCount}`;
-                params.push(filters.minCloudCoverage);
-                paramCount++;
-            }
-            if (filters.maxCloudCoverage !== undefined) {
-                query += ` AND cloud_coverage <= $${paramCount}`;
-                params.push(filters.maxCloudCoverage);
-                paramCount++;
-            }
-            // Date range filter
-            if (filters.acquisitionDate) {
-                query += ` AND DATE(acquisition_date_start) = DATE($${paramCount})`;
-                params.push(filters.acquisitionDate);
-                paramCount++;
-            }
-
-            const images = await this.model.getAll(query, params);
+            const images = await this.model.getAll(filters);
             res.json(images);
         } catch (error) {
             next(error);
