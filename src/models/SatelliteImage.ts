@@ -10,10 +10,22 @@ export class SatelliteImageModel {
         const params: any[] = [];
         let paramCount = 1;
 
-        // Sensor filter
-        if (filters.sensor) {
-            query += ` AND sensor = $${paramCount}`;
-            params.push(filters.sensor);
+        // Acquisition date filter
+        if (filters.acquisitionDate) {
+            query += ` AND DATE(acquisition_date_start) = DATE($${paramCount})`;
+            params.push(filters.acquisitionDate);
+            paramCount++;
+        }
+        // off-nadir filter
+        if (filters.offNadir !== undefined) {
+            query += ` AND off_nadir = $${paramCount}`;
+            params.push(filters.offNadir);
+            paramCount++;
+        }
+        // resolution filter
+        if (filters.resolution !== undefined) {
+            query += ` AND resolution = $${paramCount}`;
+            params.push(filters.resolution);
             paramCount++;
         }
         // Cloud coverage filter
@@ -27,10 +39,28 @@ export class SatelliteImageModel {
             params.push(filters.maxCloudCoverage);
             paramCount++;
         }
-        // Date range filter
-        if (filters.acquisitionDate) {
-            query += ` AND DATE(acquisition_date_start) = DATE($${paramCount})`;
-            params.push(filters.acquisitionDate);
+        // Sensor filter
+        if (filters.sensor) {
+            query += ` AND sensor = $${paramCount}`;
+            params.push(filters.sensor);
+            paramCount++;
+        }
+        // Scan direction filter
+        if (filters.scanDirection) {
+            query += ` AND scan_direction = $${paramCount}`;
+            params.push(filters.scanDirection);
+            paramCount++;
+        }
+        // Satellite elevation filter
+        if (filters.satelliteElevation !== undefined) {
+            query += ` AND satellite_elevation = $${paramCount}`;
+            params.push(filters.satelliteElevation);
+            paramCount++;
+        }
+        // Image bands filter
+        if (filters.imageBands) {
+            query += ` AND image_bands = $${paramCount}`;
+            params.push(filters.imageBands);
             paramCount++;
         }
 

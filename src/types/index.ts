@@ -13,10 +13,15 @@ export interface SatelliteImage {
 }
 
 export interface SatelliteImageFilters {
-    sensor?: string;
     acquisitionDate?: Date;
+    offNadir?: number;
+    resolution?: number;
     minCloudCoverage?: number;
     maxCloudCoverage?: number;
+    sensor?: string;
+    scanDirection?: string;
+    satelliteElevation?: number;
+    imageBands?: string;
 }
 
 export enum PaymentMethod {
