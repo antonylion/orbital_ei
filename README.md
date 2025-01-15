@@ -1,6 +1,6 @@
 # Orbital_EI
 
-**Orbital_EI** is a RESTful API designed for searching and ordering satellite images. It enables users to interact with a database of satellite imagery seamlessly and efficiently.
+**Orbital_EI** is a fictional RESTful API designed for searching and ordering satellite images. It enables users to interact with a database of satellite imagery and create an order.
 
 
 ## Running the application with Docker
