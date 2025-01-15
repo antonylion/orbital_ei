@@ -23,13 +23,11 @@ export class OrderController {
                 message: "Correctly purchased image :)"
             });
         } catch (error) {
-            // Check for foreign key violation (Postgres error code 23503)
-            if (error.code === '23503' && error.constraint === 'orders_image_id_fkey') {
+            if (error.message === 'IMAGE_NOT_FOUND') {
                 return res.status(400).json({
                     message: "The image you are trying to order does not exist in our database"
                 });
             }
-
             // Pass other errors to the error handler middleware
             next(error);
         }
@@ -41,7 +39,7 @@ export class OrderController {
             // Handle pagination parameters separately
             const page = parseInt(req.query.page as string) || 1;
             const limit = parseInt(req.query.limit as string) || 10;
-    
+
             // Validate pagination parameters
             if (page < 1 || limit < 1) {
                 return res.status(400).json({

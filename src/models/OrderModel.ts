@@ -4,12 +4,19 @@ import { Order, OrderFilters, PaymentMethod } from '../types';
 export class OrderModel {
     constructor(private pool: Pool) {}
 
-    async create(imageId: Number, customerEmail: string, paymentMenthod: PaymentMethod): Promise<Order> {
-        const result = await this.pool.query(
-            'INSERT INTO orders (image_id, customer_email, payment_method) VALUES ($1, $2, $3)',
-            [imageId, customerEmail, paymentMenthod]
-        );
-        return result.rows[0];
+    async create(imageId: Number, customerEmail: string, paymentMenthod: PaymentMethod) {
+        
+        try{
+            await this.pool.query(
+                'INSERT INTO orders (image_id, customer_email, payment_method) VALUES ($1, $2, $3)',
+                [imageId, customerEmail, paymentMenthod]
+            );
+        } catch(error) {
+            if (error.code === '23503' && error.constraint === 'orders_image_id_fkey') {
+                throw new Error('IMAGE_NOT_FOUND');
+            }
+            throw error; // Re-throw other errors
+        }
     }
 
     async getAll(filters: OrderFilters, page: number, limit: number): Promise<{data: Order[], total: number}> {
