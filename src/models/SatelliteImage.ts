@@ -4,10 +4,8 @@ import { SatelliteImage } from '../types';
 export class SatelliteImageModel {
     constructor(private pool: Pool) {}
 
-    async getAll(): Promise<SatelliteImage[]> {
-        const result = await this.pool.query(
-            'SELECT *, ST_AsGeoJSON(geometry)::json as geometry FROM images'
-        );
+    async getAll(queryWithFilters: string, params: any[]): Promise<SatelliteImage[]> {
+        const result = await this.pool.query(queryWithFilters, params);
         return result.rows;
     }
 

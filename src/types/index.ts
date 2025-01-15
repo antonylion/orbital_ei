@@ -12,6 +12,13 @@ export interface SatelliteImage {
     geometry: GeoJSON.Polygon;
 }
 
+export interface SatelliteImageFilters {
+    sensor?: string;
+    acquisitionDate?: Date;
+    minCloudCoverage?: number;
+    maxCloudCoverage?: number;
+}
+
 export enum PaymentMethod {
     BankTransfer = "Bank Transfer",
     CreditCard = "Credit Card",

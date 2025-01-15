@@ -501,6 +501,153 @@ INSERT INTO images (
 	}')
 );
 
+INSERT INTO images (
+	acquisition_date_start,
+	acquisition_date_end,
+	off_nadir,
+	resolution,
+	cloud_coverage,
+	sensor,
+	scan_direction,
+	satellite_elevation,
+	image_bands,
+	geometry
+) VALUES (
+    '2024-01-18T11:14:26.000Z',
+    '2024-01-18T11:14:33.000Z',
+    12.59,
+    0.33,
+    31.02,
+    'SEN2',
+    'Reverse',
+    76.17,
+    '8-BANDS',
+    ST_GeomFromGeoJSON('{"type":"Polygon","coordinates":
+		[
+          [
+            [
+              126.96890122466726,
+              37.572971566638486
+            ],
+            [
+              126.96890122466726,
+              37.558001436422515
+            ],
+            [
+              126.98808369881925,
+              37.558001436422515
+            ],
+            [
+              126.98808369881925,
+              37.572971566638486
+            ],
+            [
+              126.96890122466726,
+              37.572971566638486
+            ]
+          ]
+        ]
+	}')
+);
+
+INSERT INTO images (
+	acquisition_date_start,
+	acquisition_date_end,
+	off_nadir,
+	resolution,
+	cloud_coverage,
+	sensor,
+	scan_direction,
+	satellite_elevation,
+	image_bands,
+	geometry
+) VALUES (
+    '2025-03-18T11:14:26.000Z',
+    '2025-03-18T11:14:33.000Z',
+    12.59,
+    0.33,
+    31.02,
+    'SEN2',
+    'Reverse',
+    76.17,
+    '8-BANDS',
+    ST_GeomFromGeoJSON('{"type":"Polygon","coordinates":
+		[
+          [
+            [
+              -3.1982196755885184,
+              55.958192218387524
+            ],
+            [
+              -3.1982196755885184,
+              55.94708645592996
+            ],
+            [
+              -3.1768217254642934,
+              55.94708645592996
+            ],
+            [
+              -3.1768217254642934,
+              55.958192218387524
+            ],
+            [
+              -3.1982196755885184,
+              55.958192218387524
+            ]
+          ]
+        ]
+	}')
+);
+
+INSERT INTO images (
+	acquisition_date_start,
+	acquisition_date_end,
+	off_nadir,
+	resolution,
+	cloud_coverage,
+	sensor,
+	scan_direction,
+	satellite_elevation,
+	image_bands,
+	geometry
+) VALUES (
+    '2025-02-18T11:14:26.000Z',
+    '2025-02-18T11:14:33.000Z',
+    12.59,
+    0.33,
+    12.65,
+    'SEN2',
+    'Reverse',
+    76.17,
+    '8-BANDS',
+    ST_GeomFromGeoJSON('{"type":"Polygon","coordinates":
+		[
+          [
+            [
+              -3.1982196755885184,
+              55.958192218387524
+            ],
+            [
+              -3.1982196755885184,
+              55.94708645592996
+            ],
+            [
+              -3.1768217254642934,
+              55.94708645592996
+            ],
+            [
+              -3.1768217254642934,
+              55.958192218387524
+            ],
+            [
+              -3.1982196755885184,
+              55.958192218387524
+            ]
+          ]
+        ]
+	}')
+);
+
 -- Square n.11 - Cape Town
 INSERT INTO images (
 	acquisition_date_start,
