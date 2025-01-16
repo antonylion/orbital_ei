@@ -4,6 +4,13 @@ import { SatelliteImage, SatelliteImageFilters } from '../types';
 export class SatelliteImageModel {
     constructor(private pool: Pool) { }
 
+    /**
+     * Retrieve all images with optional filters, pagination, and total count
+     * @param filters - Filtering options (acquisition date, resolution, cloud coverage, etc.)
+     * @param page - Page number for pagination
+     * @param limit - Number of items per page
+     * @returns An object containing an array of orders and the total count
+     */
     async getAll(filters: SatelliteImageFilters, page: number, limit: number): Promise<{ data: SatelliteImage[], total: number }> {
 
         try {
@@ -108,6 +115,11 @@ export class SatelliteImageModel {
         }
     }
 
+    /**
+     * Retrieve all images with optional filters, pagination, and total count
+     * @param id - Id of the image to be retrieved
+     * @returns An object containing a satellite image
+     */
     async getById(id: number): Promise<SatelliteImage> {
         try {
             //TODO: understand which errors may come from DB, catch, process and send them accordingly to the controller
