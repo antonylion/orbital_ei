@@ -4,6 +4,13 @@ import { Order, OrderFilters, PaymentMethod } from '../types';
 export class OrderModel {
     constructor(private pool: Pool) { }
 
+    /**
+     * Create a new order
+     * @param imageId - The ID of the image being ordered
+     * @param customerEmail - The email of the customer placing the order
+     * @param paymentMethod - The payment method used for the order. CONSTRAINT in ('Bank Transfer', 'Credit Card', 'PayPal')
+     * @throws IMAGE_NOT_FOUND if the image_id does not exist in the database
+     */
     async create(imageId: Number, customerEmail: string, paymentMenthod: PaymentMethod) {
 
         try {
@@ -95,7 +102,6 @@ export class OrderModel {
             // invalid input type? e.g. characters not accepted
             // invalid input type -> json fields not accepted
             // data length vilations
-            console.error('Error in getAll:', error);
             throw new Error('DATABASE_ERROR');
         }
     }
