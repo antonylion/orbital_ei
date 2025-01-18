@@ -1,5 +1,5 @@
 import { Pool } from 'pg';
-import { Order, OrderFilters, PaymentMethod } from '../types';
+import { Order, OrderFilters, PaymentMethod } from '../types/types';
 
 export class OrderModel {
     constructor(private pool: Pool) { }

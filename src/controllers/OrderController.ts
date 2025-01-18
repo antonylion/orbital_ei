@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { OrderModel } from '../models/OrderModel';
 import { validationResult } from 'express-validator';
-import { OrderFilters } from '../types';
+import { OrderFilters } from '../types/types';
 
 export class OrderController {
     constructor(private model: OrderModel) { }

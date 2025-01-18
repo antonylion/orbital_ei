@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { SatelliteImageModel } from '../models/SatelliteImageModel';
-import { SatelliteImageFilters } from '../types';
+import { SatelliteImageFilters } from '../types/types';
 
 export class SatelliteImageController {
     constructor(private model: SatelliteImageModel) {}

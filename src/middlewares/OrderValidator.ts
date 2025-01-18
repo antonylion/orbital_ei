@@ -1,5 +1,5 @@
 import { body } from "express-validator";
-import { PaymentMethod } from "../types";
+import { PaymentMethod } from "../types/types";
 
 export const validateCreateOrder = [
     body("image_id").notEmpty().withMessage("image_id is required"),

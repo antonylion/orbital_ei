@@ -1,5 +1,5 @@
 import { Pool } from 'pg';
-import { SatelliteImage, SatelliteImageFilters } from '../types';
+import { SatelliteImage, SatelliteImageFilters } from '../types/types';
 
 export class SatelliteImageModel {
     constructor(private pool: Pool) { }
