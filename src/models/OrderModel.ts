@@ -19,7 +19,7 @@ export class OrderModel {
                 [imageId, customerEmail, paymentMenthod]
             );
         } catch (error) {
-            throw new Error('DATABASE_ERROR'); // Re-throw other errors
+            throw new Error('DATABASE_ERROR');
         }
     }
 

@@ -104,13 +104,6 @@ export class SatelliteImageModel {
                 total: parseInt(countResult.rows[0].count)
             };
         } catch (error) {
-            // Log error if needed and rethrow
-            //TODO: understand which OTHER errors may come from DB, catch, process and send them accordingly to the controller
-            // database not reachable? because off?
-            // violating a check -> e.g. payment method for filtering
-            // invalid input type? e.g. characters not accepted
-            // invalid input type -> json fields not accepted
-            // data length vilations
             throw new Error('DATABASE_ERROR');
         }
     }
@@ -122,20 +115,12 @@ export class SatelliteImageModel {
      */
     async getById(id: number): Promise<SatelliteImage> {
         try {
-            //TODO: understand which errors may come from DB, catch, process and send them accordingly to the controller
             const result = await this.pool.query(
                 'SELECT *, ST_AsGeoJSON(geometry)::json as geometry FROM images WHERE catalog_id = $1',
                 [id]
             );
             return result.rows[0];
         } catch(error){
-            // Log error if needed and rethrow
-            //TODO: understand which OTHER errors may come from DB, catch, process and send them accordingly to the controller
-            // database not reachable? because off?
-            // violating a check -> e.g. payment method for filtering
-            // invalid input type? e.g. characters not accepted
-            // invalid input type -> json fields not accepted
-            // data length vilations
             throw new Error('DATABASE_ERROR');
         }
     }
