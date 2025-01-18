@@ -1267,6 +1267,6 @@ INSERT INTO orders (
 ) VALUES (
     5,
     'antony@zappacosta.com',
-    '2023-09-22T11:14:26.000Z'
+    '2023-09-22T11:14:26.000Z',
     'PayPal'
 );
