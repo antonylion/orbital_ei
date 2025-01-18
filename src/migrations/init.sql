@@ -1,7 +1,7 @@
 CREATE TABLE images (
     catalog_id SERIAL PRIMARY KEY,
-    acquisition_date_start TIMESTAMP NOT NULL,
-    acquisition_date_end TIMESTAMP NOT NULL,
+    acquisition_date_start TIMESTAMP WITH TIME ZONE NOT NULL,
+    acquisition_date_end TIMESTAMP WITH TIME ZONE NOT NULL,
     off_nadir DECIMAL(5,2) NOT NULL,
     resolution DECIMAL(5,2) NOT NULL,
     cloud_coverage DECIMAL(5,2) NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE orders (
     order_id SERIAL PRIMARY KEY,
     image_id INT REFERENCES images(catalog_id),
     customer_email VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     payment_method PAYMETHOD NOT NULL
 );
 

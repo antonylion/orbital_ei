@@ -37,9 +37,5 @@ app.use((req, res, next) => {
 // Error handling
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
-
-export default app;
+// Export the app instance without starting the server
+export { app, pool };
