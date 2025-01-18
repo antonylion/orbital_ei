@@ -19,18 +19,7 @@ export class OrderModel {
                 [imageId, customerEmail, paymentMenthod]
             );
         } catch (error) {
-            if (error.code === '23503' && error.constraint === 'orders_image_id_fkey') {
-                throw new Error('IMAGE_NOT_FOUND');
-            }
-            //TODO: understand which OTHER errors may come from DB, catch, process and send them accordingly to the controller
-            // database not reachable? because off?
-            // unique constraint violation when inserting an order
-            // not null constraint violation
-            // violating a check -> e.g. payment method
-            // invalid input type? e.g. characters not accepted
-            // invalid input type -> json fields not accepted
-            // data length vilations
-            throw error; // Re-throw other errors
+            throw new Error('DATABASE_ERROR'); // Re-throw other errors
         }
     }
 
@@ -95,13 +84,6 @@ export class OrderModel {
                 total: parseInt(countResult.rows[0].count)
             };
         } catch (error) {
-            // Log error if needed and rethrow
-            //TODO: understand which OTHER errors may come from DB, catch, process and send them accordingly to the controller
-            // database not reachable? because off?
-            // violating a check -> e.g. payment method for filtering
-            // invalid input type? e.g. characters not accepted
-            // invalid input type -> json fields not accepted
-            // data length vilations
             throw new Error('DATABASE_ERROR');
         }
     }
