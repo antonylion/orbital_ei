@@ -57,7 +57,17 @@ export class SatelliteImageController {
             const image = await this.model.getById(id);
     
             if (!image) {
-                return res.status(404).json({ message: "Image not found" });
+                return res.status(400).json({
+                    errors: [
+                        {
+                            type: "custom",
+                            value: id,
+                            msg: "The image you are trying to retrieve does not exist in our database",
+                            path: "image_id",
+                            location: "body"
+                        }
+                    ]
+                });
             }
     
             res.json(image);

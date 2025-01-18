@@ -25,7 +25,15 @@ export class OrderController {
         } catch (error) {
             if (error.message === 'IMAGE_NOT_FOUND') {
                 return res.status(400).json({
-                    message: "The image you are trying to order does not exist in our database"
+                    errors: [
+                        {
+                            type: "custom",
+                            value: image_id,
+                            msg: "The image you are trying to order does not exist in our database",
+                            path: "image_id",
+                            location: "body"
+                        }
+                    ]
                 });
             }
             // Pass other errors to the error handler middleware
