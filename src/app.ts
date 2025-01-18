@@ -26,6 +26,14 @@ const orderController = new OrderController(orderModel);
 app.use('/api/images', createSatelliteImageRouter(satelliteImageController));
 app.use('/api/orders', createOrderRouter(orderController));
 
+// Catch-all route for non-existing API endpoints
+app.use((req, res, next) => {
+    res.status(404).json({
+        error: 'Not Found',
+        message: `The route ${req.originalUrl} does not exist.`,
+    });
+});
+
 // Error handling
 app.use(errorHandler);
 
