@@ -19,6 +19,10 @@ export class OrderModel {
                 [imageId, customerEmail, paymentMenthod]
             );
         } catch (error) {
+            // error.code = 23503 -> foreign key violation
+            if (error.code === '23503') {
+                throw new Error('IMAGE_NOT_FOUND');
+            }
             throw new Error('DATABASE_ERROR');
         }
     }
