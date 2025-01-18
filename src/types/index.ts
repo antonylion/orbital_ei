@@ -31,6 +31,12 @@ export enum PaymentMethod {
     PayPal = "PayPal",
 }
 
+export enum PostgresErrorCodes {
+    UNIQUE_VIOLATION = '23505',
+    FOREIGN_KEY_VIOLATION = '23503',
+    NOT_NULL_VIOLATION = '23502',
+  }
+
 export interface Order {
     orderId: number;
     imageId: number;
