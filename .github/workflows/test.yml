@@ -1,0 +1,56 @@
+name: Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgis/postgis:15-3.3
+        env:
+          POSTGRES_USER: ${DB_USER}
+          POSTGRES_PASSWORD: ${DB_PSWD}
+          POSTGRES_DB: ${DB_NAME}
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '23'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run tests
+      run: npm test
+      env:
+        DATABASE_URL: ${DB_HOST}
+
+    - name: Upload coverage reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-report
+        path: coverage/
+
+    - name: Check test coverage
+      run: |
+        if [ $(npm run test:coverage | grep -o "Lines.*%" | grep -o "[0-9]*\.[0-9]*") \< "80.0" ]; then
+          echo "Test coverage is below 80%"
+          exit 1
+        fi
