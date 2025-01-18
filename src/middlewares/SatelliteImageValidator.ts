@@ -63,9 +63,34 @@ export const validateSatelliteImageFilters = [
 
     // bbox must be a valid bounding box format (e.g., "minX,minY,maxX,maxY")
     query("bbox")
-        .optional()
-        .matches(/^-?\d+(\.\d+)?,-?\d+(\.\d+)?,-?\d+(\.\d+)?,-?\d+(\.\d+)?$/)
-        .withMessage("BBox must be in the format 'minX,minY,maxX,maxY' with valid coordinates"),
+    .optional()
+    .custom((value) => {
+        // Split the value into parts using a comma as a separator
+        const parts = value.split(",");
+        
+        // Ensure there are exactly 4 parts (minX, minY, maxX, maxY)
+        if (parts.length !== 4) {
+            throw new Error("BBox must have exactly 4 comma-separated values: minX,minY,maxX,maxY");
+        }
+
+        // Parse each part as a float
+        const [minX, minY, maxX, maxY] = parts.map(Number);
+
+        // Check longitude ranges (-180 to 180)
+        if (minX < -180 || minX > 180 || maxX < -180 || maxX > 180) {
+            throw new Error("Longitude values (minX, maxX) must be between -180 and 180");
+        }
+
+        // Check latitude ranges (-90 to 90)
+        if (minY < -90 || minY > 90 || maxY < -90 || maxY > 90) {
+            throw new Error("Latitude values (minY, maxY) must be between -90 and 90");
+        }
+
+        return true; // Validation passed
+    })
+    .withMessage(
+        "BBox must be in the format 'minX,minY,maxX,maxY' with valid coordinates: Longitude between -180 and 180, Latitude between -90 and 90"
+    ),
 ];
 
 // generated with ChatGPT
