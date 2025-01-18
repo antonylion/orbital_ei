@@ -33,7 +33,7 @@ Ensure you have the following installed on your machine:
    # Create .env file and write the following content:
 
    DB_USER="postgres"
-   DB_HOST="db"
+   DB_HOST="localhost"
    DB_NAME="postgres"
    DB_PSWD="mysecretpassword"
    DB_PORT=5432
