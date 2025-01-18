@@ -1258,3 +1258,15 @@ INSERT INTO orders (
     'antony.zappacosta@outlook.com',
     'Bank Transfer'
 );
+
+INSERT INTO orders (
+	image_id,
+	customer_email,
+  created_at,
+	payment_method
+) VALUES (
+    5,
+    'antony@zappacosta.com',
+    '2023-09-22T11:14:26.000Z'
+    'PayPal'
+);
