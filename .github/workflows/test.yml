@@ -59,16 +59,10 @@ jobs:
     - name: Run tests
       run: npm test
       env:
-        POSTGRES_USER: ${{ secrets.TEST_DB_USER }}
-        POSTGRES_PASSWORD: ${{ secrets.TEST_DB_PSWD }}
-        POSTGRES_DB: ${{ secrets.TEST_DB_NAME }}
-        DATABASE_HOST: ${{ secrets.TEST_DB_HOST }}
-        DATABASE_URL: ${{ secrets.TEST_DB_URL }}
         DB_USER: ${{ secrets.TEST_DB_USER }}
         DB_PSWD: ${{ secrets.TEST_DB_PSWD }}
         DB_NAME: ${{ secrets.TEST_DB_NAME }}
         DB_HOST: ${{ secrets.TEST_DB_HOST }}
-        DB_URL: ${{ secrets.TEST_DB_URL }}
 
     - name: Upload coverage reports
       uses: actions/upload-artifact@v3
