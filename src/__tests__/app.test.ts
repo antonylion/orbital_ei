@@ -8,12 +8,25 @@ describe('Satellite Images API Integration Tests', () => {
 
   beforeAll(async () => {
 
-    pool = createPool();
+    if (!process.env.DATABASE_URL) {
+      throw new Error('DATABASE_URL is not set');
+    }
+    if (!process.env.DB_USER || !process.env.DB_PSWD || !process.env.DB_HOST) {
+      throw new Error('Database connection variables are missing');
+    }
+
+    pool = createPool(); //TODO: use github secrets for github workflow
     // Test the connection
     try {
       await pool.query('SELECT NOW()');
     } catch (err) {
-      console.error('Database connection failed:', err);
+      console.error('Database connection failed:', {
+        error: err.message,
+        code: err.code,
+        errno: err.errno,
+        syscall: err.syscall,
+        hostname: err.hostname,
+      });
       throw err;
     }
   });

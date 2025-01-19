@@ -14,9 +14,9 @@ jobs:
       postgres:
         image: postgis/postgis
         env:
-          POSTGRES_USER: ${{ secrets.DB_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.DB_PSWD }}
-          POSTGRES_DB: ${{ secrets.DB_NAME }}
+          POSTGRES_USER: ${{ secrets.TEST_DB_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.TEST_DB_PSWD }}
+          POSTGRES_DB: ${{ secrets.TEST_DB_NAME }}
         ports:
           - 5432:5432
         options: >-
@@ -36,11 +36,39 @@ jobs:
 
     - name: Install dependencies
       run: npm ci
+    
+    - name: Wait for Postgres to be ready
+      run: |
+        for i in {1..10}; do
+          if pg_isready -h localhost -p 5432; then
+            echo "Postgres is ready"
+            break
+          fi
+          echo "Waiting for Postgres..."
+          sleep 3
+        done
+
+    - name: Apply migrations to populate the database
+      run: |
+        PGPASSWORD=${{ secrets.TEST_DB_PSWD }} psql \
+          -h localhost \
+          -U ${{ secrets.TEST_DB_USER }} \
+          -d ${{ secrets.TEST_DB_NAME }} \
+          -f src/migrations/init.sql
 
     - name: Run tests
       run: npm test
       env:
-        DATABASE_URL: ${{ secrets.DB_HOST }}
+        POSTGRES_USER: ${{ secrets.TEST_DB_USER }}
+        POSTGRES_PASSWORD: ${{ secrets.TEST_DB_PSWD }}
+        POSTGRES_DB: ${{ secrets.TEST_DB_NAME }}
+        DATABASE_HOST: ${{ secrets.TEST_DB_HOST }}
+        DATABASE_URL: ${{ secrets.TEST_DB_URL }}
+        DB_USER: ${{ secrets.TEST_DB_USER }}
+        DB_PSWD: ${{ secrets.TEST_DB_PSWD }}
+        DB_NAME: ${{ secrets.TEST_DB_NAME }}
+        DB_HOST: ${{ secrets.TEST_DB_HOST }}
+        DB_URL: ${{ secrets.TEST_DB_URL }}
 
     - name: Upload coverage reports
       uses: actions/upload-artifact@v3
