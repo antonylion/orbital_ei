@@ -57,7 +57,7 @@ export class SatelliteImageController {
             const image = await this.model.getById(id);
     
             if (!image) {
-                return res.status(400).json({
+                return res.status(404).json({
                     errors: [
                         {
                             type: "custom",

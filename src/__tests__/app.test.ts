@@ -8,14 +8,11 @@ describe('Satellite Images API Integration Tests', () => {
 
   beforeAll(async () => {
 
-    if (!process.env.DATABASE_URL) {
-      throw new Error('DATABASE_URL is not set');
-    }
     if (!process.env.DB_USER || !process.env.DB_PSWD || !process.env.DB_HOST) {
       throw new Error('Database connection variables are missing');
     }
 
-    pool = createPool(); //TODO: use github secrets for github workflow
+    pool = createPool();
     // Test the connection
     try {
       await pool.query('SELECT NOW()');
@@ -84,11 +81,11 @@ describe('Satellite Images API Integration Tests', () => {
     });
 
     
-    /*it('should return 404 for non-existent image', async () => {
+    it('should return 404 for non-existent image', async () => {
       await request(app)
         .get('/api/images/999')
         .expect(404);
     });
-    */
+    
   });
 });
