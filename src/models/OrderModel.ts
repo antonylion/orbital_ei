@@ -11,13 +11,14 @@ export class OrderModel {
      * @param paymentMethod - The payment method used for the order. CONSTRAINT in ('Bank Transfer', 'Credit Card', 'PayPal')
      * @throws IMAGE_NOT_FOUND if the image_id does not exist in the database
      */
-    async create(imageId: Number, customerEmail: string, paymentMenthod: PaymentMethod) {
+    async create(imageId: Number, customerEmail: string, paymentMenthod: PaymentMethod): Promise<Order> {
 
         try {
-            await this.pool.query(
+            const result = await this.pool.query(
                 'INSERT INTO orders (image_id, customer_email, payment_method) VALUES ($1, $2, $3)',
                 [imageId, customerEmail, paymentMenthod]
             );
+            return result.rows[0];
         } catch (error) {
             // error.code = 23503 -> foreign key violation
             if (error.code === '23503') {

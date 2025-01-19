@@ -14,13 +14,14 @@ export class OrderController {
             return res.status(400).json({ errors: errors.array() });
         }
         try {
-            await this.model.create(
+            const order = await this.model.create(
                 image_id,
                 customer_email,
                 payment_method
             );
             res.status(201).json({
-                message: "Correctly purchased image :)"
+                message: "Correctly purchased image :)",
+                order: order
             });
         } catch (error) {
             if (error.message === 'IMAGE_NOT_FOUND') {
