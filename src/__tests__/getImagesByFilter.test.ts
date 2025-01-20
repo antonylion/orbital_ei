@@ -247,7 +247,6 @@ describe('Satellite Images API Integration Tests', () => {
     
             // Extract the 'data' array from the response
             const responseData = response.body.data;
-            console.log('API Data:', responseData);
     
             // Verify the response contains an empty array
             expect(responseData).toEqual([]);
