@@ -1,7 +1,9 @@
 import { query, param } from "express-validator";
+import * as turf from "@turf/turf";
+import { BBox } from "geojson";
 
 
-// generated with ChatGPT
+// generated with ChatGPT//
 export const validateSatelliteImageFilters = [
     // acquisitionDate must be a valid ISO 8601 date
     query("acquisitionDate")
@@ -63,34 +65,46 @@ export const validateSatelliteImageFilters = [
 
     // bbox must be a valid bounding box format (e.g., "minX,minY,maxX,maxY")
     query("bbox")
-    .optional()
-    .custom((value) => {
-        // Split the value into parts using a comma as a separator
-        const parts = value.split(",");
-        
-        // Ensure there are exactly 4 parts (minX, minY, maxX, maxY)
-        if (parts.length !== 4) {
-            throw new Error("BBox must have exactly 4 comma-separated values: minX,minY,maxX,maxY");
-        }
+        .optional()
+        .custom((value) => {
+            // Split the value into parts using a comma as a separator
+            const parts = value.split(",");
 
-        // Parse each part as a float
-        const [minX, minY, maxX, maxY] = parts.map(Number);
+            // Ensure there are exactly 4 parts (minX, minY, maxX, maxY)
+            if (parts.length !== 4) {
+                throw new Error("BBox must have exactly 4 comma-separated values: minX,minY,maxX,maxY");
+            }
 
-        // Check longitude ranges (-180 to 180)
-        if (minX < -180 || minX > 180 || maxX < -180 || maxX > 180) {
-            throw new Error("Longitude values (minX, maxX) must be between -180 and 180");
-        }
+            // Parse each part as a float
+            const [minX, minY, maxX, maxY] = parts.map(Number);
 
-        // Check latitude ranges (-90 to 90)
-        if (minY < -90 || minY > 90 || maxY < -90 || maxY > 90) {
-            throw new Error("Latitude values (minY, maxY) must be between -90 and 90");
-        }
+            // Create a bbox array for Turf.js validation
+            const bbox: BBox = [minX, minY, maxX, maxY];
 
-        return true; // Validation passed
-    })
-    .withMessage(
-        "BBox must be in the format 'minX,minY,maxX,maxY' with valid coordinates: Longitude between -180 and 180, Latitude between -90 and 90"
-    ),
+            // Validate the bbox format using Turf.js
+            try {
+                // Generate a polygon from the bbox to check its validity
+                const polygon = turf.bboxPolygon(bbox);
+
+                // Ensure that minX < maxX and minY < maxY
+                if (minX >= maxX || minY >= maxY) {
+                    throw new Error("BBox values must follow the order: minX < maxX and minY < maxY");
+                }
+
+                // Additional validation using the polygon geometry
+                if (!polygon || !polygon.geometry || polygon.geometry.type !== "Polygon") {
+                    throw new Error("BBox did not generate a valid Polygon");
+                }
+
+            } catch (err) {
+                throw new Error("Invalid BBox format or values: " + err.message);
+            }
+
+            return true; // Validation passed
+        })
+        .withMessage(
+            "BBox must be in the format 'minX,minY,maxX,maxY' with valid coordinates: Longitude between -180 and 180, Latitude between -90 and 90"
+        ),
 ];
 
 // generated with ChatGPT

@@ -240,6 +240,101 @@ describe('Satellite Images API Integration Tests', () => {
             });
         });
 
+        it('should return the correct filtered satellite image data when filtering by bounding box (spatial query)', async () => {
+            const response = await request(app)
+                .get('/api/images?bbox=11.41,48.06,11.67,48.21')
+                .expect(200);
+
+            // Extract the 'data' array from the response and ensure it has a proper type
+            const responseData: Array<{
+                catalog_id: number;
+                acquisition_date_start: string;
+                acquisition_date_end: string;
+                off_nadir: string;
+                resolution: string;
+                cloud_coverage: string;
+                sensor: string;
+                scan_direction: string;
+                satellite_elevation: string;
+                image_bands: string;
+                geometry: {
+                    type: string;
+                    coordinates: number[][][][];
+                };
+            }> = response.body.data;
+
+            // Verify the response contains exactly 2 records
+            expect(responseData).toHaveLength(1);
+
+            // Define the expected structure for validation
+            const expectedStructure = {
+                catalog_id: expect.any(Number),
+                acquisition_date_start: expect.any(String),
+                acquisition_date_end: expect.any(String),
+                off_nadir: expect.any(String),
+                resolution: expect.any(String),
+                cloud_coverage: expect.any(String),
+                sensor: expect.any(String),
+                scan_direction: expect.any(String),
+                satellite_elevation: expect.any(String),
+                image_bands: expect.any(String),
+                geometry: {
+                    type: "Polygon",
+                    coordinates: expect.arrayContaining([
+                        expect.arrayContaining([
+                            expect.arrayContaining([expect.any(Number)])
+                        ])
+                    ])
+                }
+            };
+
+            // Verify each record matches the expected structure
+            responseData.forEach((record) => {
+                expect(record).toMatchObject(expectedStructure);
+            });
+
+            // Verify specific values for both records
+            expect(responseData[0]).toEqual({
+                catalog_id: 1,
+                acquisition_date_start: "2023-09-22T11:14:26.000Z",
+                acquisition_date_end: "2023-09-22T11:14:33.000Z",
+                off_nadir: "12.59",
+                resolution: "0.33",
+                cloud_coverage: "31.02",
+                sensor: "WV03",
+                scan_direction: "Reverse",
+                satellite_elevation: "76.17",
+                image_bands: "8-BANDS",
+                geometry: {
+                    type: "Polygon",
+                    coordinates: [
+                        [
+                            [
+                                11.410587274,
+                                48.212623997
+                            ],
+                            [
+                                11.410587274,
+                                48.065735887
+                            ],
+                            [
+                                11.676255132,
+                                48.065735887
+                            ],
+                            [
+                                11.676255132,
+                                48.212623997
+                            ],
+                            [
+                                11.410587274,
+                                48.212623997
+                            ]
+                        ]
+                    ]
+                }
+            });
+        });
+
         it('should return an empty data array when no records match the filter', async () => {
             const response = await request(app)
                 .get('/api/images?sensor=NonExistentSensor')
