@@ -42,7 +42,7 @@ Ensure you have the following installed on your machine:
 4. **Build the Docker Image**  
    Build the Docker image for the application:
    ```sh
-   docker build -t orbit-ei .
+   docker build -t orbital-ei .
    ```
 
 5. **Start the Application**  
