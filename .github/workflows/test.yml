@@ -76,3 +76,8 @@ jobs:
           echo "Test coverage is below 80%"
           exit 1
         fi
+      env:
+          DB_USER: ${{ secrets.TEST_DB_USER }}
+          DB_PSWD: ${{ secrets.TEST_DB_PSWD }}
+          DB_NAME: ${{ secrets.TEST_DB_NAME }}
+          DB_HOST: ${{ secrets.TEST_DB_HOST }}
