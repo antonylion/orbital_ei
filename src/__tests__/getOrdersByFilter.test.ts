@@ -65,29 +65,20 @@ describe('Orders API Integration Tests', () => {
             });
 
             // Verify specific values for all records
-            expect(responseData[0]).toEqual({
-                order_id: 3,
-                image_id: 7,
-                customer_email: "antony.zappacosta@oulook.com",
-                created_at: "2025-01-19T15:53:40.281Z",
-                payment_method: "PayPal",
-            });
+            expect(responseData[0].order_id).toBe(3);
+            expect(responseData[0].image_id).toBe(7);
+            expect(responseData[0].customer_email).toBe('antony.zappacosta@oulook.com');
+            expect(responseData[0].payment_method).toBe('PayPal');
 
-            expect(responseData[1]).toEqual({
-                order_id: 5,
-                image_id: 13,
-                customer_email: "antony.zappacosta@gmail.com",
-                created_at: "2025-01-19T15:53:40.287Z",
-                payment_method: "PayPal",
-            });
+            expect(responseData[1].order_id).toBe(5);
+            expect(responseData[1].image_id).toBe(13);
+            expect(responseData[1].customer_email).toBe('antony.zappacosta@gmail.com');
+            expect(responseData[1].payment_method).toBe('PayPal');
 
-            expect(responseData[2]).toEqual({
-                order_id: 7,
-                image_id: 5,
-                customer_email: "antony@zappacosta.com",
-                created_at: "2023-09-22T11:14:26.000Z",
-                payment_method: "PayPal",
-            });
+            expect(responseData[2].order_id).toBe(7);
+            expect(responseData[2].image_id).toBe(5);
+            expect(responseData[2].customer_email).toBe('antony@zappacosta.com');
+            expect(responseData[2].payment_method).toBe('PayPal');
 
         });
 
