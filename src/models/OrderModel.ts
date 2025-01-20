@@ -15,7 +15,7 @@ export class OrderModel {
 
         try {
             const result = await this.pool.query(
-                'INSERT INTO orders (image_id, customer_email, payment_method) VALUES ($1, $2, $3)',
+                'INSERT INTO orders (image_id, customer_email, payment_method) VALUES ($1, $2, $3) RETURNING *',
                 [imageId, customerEmail, paymentMenthod]
             );
             return result.rows[0];
