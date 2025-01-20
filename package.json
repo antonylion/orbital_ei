@@ -7,7 +7,7 @@
     "build": "npx tsc",
     "start": "node dist/server.js",
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/server.ts",
-    "test": "jest --forceExit --detectOpenHandles",
+    "test": "jest --detectOpenHandles",
     "test:coverage": "jest --coverage"
   },
   "repository": {
