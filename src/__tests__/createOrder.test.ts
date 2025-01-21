@@ -4,6 +4,9 @@ import { app } from '../app';
 import { createPool } from '../config/db';
 import { PaymentMethod } from "../types/types";
 
+/**
+ * The following unit tests have been created with ChatGPT.
+ */
 describe('Orders API Integration Tests', () => {
     let pool: Pool;
 
@@ -112,7 +115,5 @@ describe('Orders API Integration Tests', () => {
             expect(response.body.errors[0].msg).toBe("Valid email address is required");
             expect(response.body.errors[0].path).toBe("customer_email");
         });
-
-
     });
 });

@@ -4,6 +4,9 @@ import { PaymentMethod } from "../types/types";
 /**
  * Validation rules for creating an order.
  * Ensures required fields are present and have valid values.
+ * 
+ * The following validation rules have been generated with the help of ChatGPT
+ * 
  */
 export const validateCreateOrder = [
     /** Ensures 'image_id' is provided and not empty. */

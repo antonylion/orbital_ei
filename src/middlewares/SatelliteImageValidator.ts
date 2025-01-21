@@ -5,6 +5,9 @@ import { BBox } from "geojson";
 /**
  * Validation rules for retrieving satellite images.
  * Validates query parameters for filtering satellite images.
+ * 
+ * The following validation rules have been generated with the help of ChatGPT
+ * 
  */
 export const validateSatelliteImageFilters = [
     /** Validates that 'acquisitionDate' is an optional ISO 8601 date. */
@@ -104,6 +107,6 @@ export const validateId = [
         .exists()
         .withMessage("ID is required")
         .bail()
-        .isInt({ min: 0 })
+        .isInt({ min: 1 })
         .withMessage("ID must be a positive integer"),
 ];

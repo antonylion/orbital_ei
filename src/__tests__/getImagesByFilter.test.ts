@@ -3,6 +3,9 @@ import request from 'supertest';
 import { app } from '../app';
 import { createPool } from '../config/db';
 
+/**
+ * The following unit tests have been created with ChatGPT.
+ */
 describe('Satellite Images API Integration Tests', () => {
     let pool: Pool;
 
