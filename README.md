@@ -59,7 +59,7 @@ Before getting started, ensure you have installed:
    DB_PORT=5432
    ```
 
-## Running the Application
+## Running the Application on localhost
 
 There are two ways to run Orbital_EI: Production mode and Development mode.
 
@@ -74,7 +74,7 @@ If you just want to run the application:
 
 2. Start the services:
    ```sh
-   docker-compose up
+   docker compose up
    ```
 
 The application will be available at `http://localhost:3000`.
@@ -90,8 +90,10 @@ If you're planning to modify the code:
 
 2. Start only the database container:
    ```sh
-   docker-compose up db
+   docker compose up db
    ```
+
+And open a new terminal.
 
 3. Run unit tests:
    ```sh
