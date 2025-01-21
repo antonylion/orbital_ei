@@ -1,52 +1,57 @@
-# Orbital_EI
+# Orbital_EI 🛰
 
-**Orbital_EI** 🛰 is a fictional RESTful API designed for searching and ordering satellite images. It enables users to interact with a database of satellite imagery and create an order.
+Orbital_EI is a fictional RESTful API designed for searching and ordering satellite images. It enables users to interact with a database of satellite imagery and place orders for specific images.
 
-## Test the running demo
+## Live Demo
 
-A live demo of orbital_ei is running on Render. You can make requests to the live API via curl, browser or using our Postman Collection (sign-in required). Here are few request examples you may want to try.
-- Get all orders purchased with a specific payment method
-   ```sh
-   curl "https://orbital-ei.onrender.com/api/orders?paymentMethod=Credit%20Card"
-   ```
-- Get all Sentinel-2 images in the Seoul area (bounding box filtering)
-   ```sh
-   curl "https://orbital-ei.onrender.com/api/images?sensor=SEN2&bbox=126.850,37.438,127.138,37.651"
-   ```
-- Purchase an image (create an order)
-   ```sh
-   curl -X POST https://orbital-ei.onrender.com/api/orders -d '{"image_id": 1, "customer_email": "test@example.com", "payment_method": "PayPal"}' -H "Content-Type: application/json"
-   ```
+A production instance of Orbital_EI is running on Render. You can interact with the API using:
+- cURL commands
+- Your web browser
+- Our [Postman Collection](https://www.postman.com) (Postman account required)
 
-## Running the application with Docker
+### Example API Requests
 
-Follow these steps to run the application using Docker.
+Get orders filtered by payment method:
+```sh
+curl "https://orbital-ei.onrender.com/api/orders?paymentMethod=Credit%20Card"
+```
+
+Search Sentinel-2 images within Seoul's area (bounding box filtering):
+```sh
+curl "https://orbital-ei.onrender.com/api/images?sensor=SEN2&bbox=126.850,37.438,127.138,37.651"
+```
+
+Create a new order:
+```sh
+curl -X POST https://orbital-ei.onrender.com/api/orders \
+  -H "Content-Type: application/json" \
+  -d '{
+    "image_id": 1,
+    "customer_email": "test@example.com",
+    "payment_method": "PayPal"
+  }'
+```
+
+## Installation
 
 ### Prerequisites
-Ensure you have the following installed on your machine:
+
+Before getting started, ensure you have installed:
 - [Docker](https://www.docker.com/)
 - [Git](https://git-scm.com/)
-- [Node.js](https://nodejs.org/en)(for local development)
+- [Node.js](https://nodejs.org/en) (required only for local development)
 
----
+### Environment Setup
 
-### Quick Start
-1. **Clone the Repository**  
-   Clone the Orbital_EI repository to your local machine:
+1. Clone the repository:
    ```sh
    git clone https://github.com/antonylion/orbital_ei.git
-   ```
-
-2. **Navigate to the Project Directory**  
-   Change into the cloned directory:
-   ```sh
    cd orbital_ei
    ```
 
-3. **Set up environment variables**
+2. Create an environment file:
    ```sh
-   # Create .env file and write the following content:
-
+   # Create .env file in project root with the following content:
    DB_USER="postgres"
    DB_HOST="localhost"
    DB_NAME="postgres"
@@ -54,23 +59,55 @@ Ensure you have the following installed on your machine:
    DB_PORT=5432
    ```
 
-4. **Build the Docker Image**  
-   Build the Docker image for the application:
+## Running the Application
+
+There are two ways to run Orbital_EI: Production mode and Development mode.
+
+### Production Mode
+
+If you just want to run the application:
+
+1. Build the Docker image:
    ```sh
    docker build -t orbital-ei .
    ```
 
-5. **Start the Application**  
-   Use Docker Compose to start the database (on port `5432`) and the server (on `localhost:3000`):
+2. Start the services:
    ```sh
    docker-compose up
    ```
 
-6. **Test the API**
+The application will be available at `http://localhost:3000`.
+
+### Development Mode
+
+If you're planning to modify the code:
+
+1. Install dependencies locally:
    ```sh
-   # Get all satellite images
-   curl http://localhost:3000/api/images
+   npm install
    ```
 
-7. **Development**
-   The application will automatically reload when you make changes to the code.
+2. Start only the database container:
+   ```sh
+   docker-compose up db
+   ```
+
+3. Run unit tests:
+   ```sh
+   npm run test
+   ```
+
+4. Run the application in development mode:
+   ```sh
+   npm run dev
+   ```
+
+The application will be available at `http://localhost:3000`.
+
+### Verifying the Installation
+
+Test if the API is running properly:
+```sh
+curl http://localhost:3000/api/images
+```
