@@ -1,7 +1,22 @@
 # Orbital_EI
 
-**Orbital_EI** is a fictional RESTful API designed for searching and ordering satellite images. It enables users to interact with a database of satellite imagery and create an order.
+**Orbital_EI** 🛰 is a fictional RESTful API designed for searching and ordering satellite images. It enables users to interact with a database of satellite imagery and create an order.
 
+## Test the running demo
+
+A live demo of orbital_ei is running on Render. You can make requests to the live API via curl, browser or using our Postman Collection (sign-in required). Here are few request examples you may want to try.
+- Get all orders purchased with a specific payment method
+   ```sh
+   curl "https://orbital-ei.onrender.com/api/orders?paymentMethod=Credit%20Card"
+   ```
+- Get all Sentinel-2 images in the Seoul area (bounding box filtering)
+   ```sh
+   curl "https://orbital-ei.onrender.com/api/images?sensor=SEN2&bbox=126.850,37.438,127.138,37.651"
+   ```
+- Purchase an image (create an order)
+   ```sh
+   curl -X POST https://orbital-ei.onrender.com/api/orders -d '{"image_id": 1, "customer_email": "test@example.com", "payment_method": "PayPal"}' -H "Content-Type: application/json"
+   ```
 
 ## Running the application with Docker
 
