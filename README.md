@@ -93,7 +93,7 @@ If you're planning to modify the code:
    docker compose up db
    ```
 
-And open a new terminal.
+   And open a new terminal.
 
 3. Run unit tests:
    ```sh
