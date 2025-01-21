@@ -8,7 +8,8 @@ export class OrderModel {
      * Create a new order
      * @param imageId - The ID of the image being ordered
      * @param customerEmail - The email of the customer placing the order
-     * @param paymentMethod - The payment method used for the order. CONSTRAINT in ('Bank Transfer', 'Credit Card', 'PayPal')
+     * @param paymentMethod - The PaymentMethod used for the order. CONSTRAINT in ('Bank Transfer', 'Credit Card', 'PayPal')
+     * @returns the just created Order
      * @throws IMAGE_NOT_FOUND if the image_id does not exist in the database
      */
     async create(imageId: Number, customerEmail: string, paymentMenthod: PaymentMethod): Promise<Order> {
@@ -31,10 +32,10 @@ export class OrderModel {
 
     /**
      * Retrieve all orders with optional filters, pagination, and total count
-     * @param filters - Filtering options (customer email, date, payment method, etc.)
+     * @param filters - OrderFilters options (customer email, date, payment method, etc.)
      * @param page - Page number for pagination
      * @param limit - Number of items per page
-     * @returns An object containing an array of orders and the total count
+     * @returns An array of orders and the total count
      */
     async getAll(filters: OrderFilters, page: number, limit: number): Promise<{ data: Order[], total: number }> {
 

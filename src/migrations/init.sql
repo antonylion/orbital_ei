@@ -550,6 +550,7 @@ INSERT INTO images (
 	}')
 );
 
+-- Edinburgh
 INSERT INTO images (
 	acquisition_date_start,
 	acquisition_date_end,
@@ -599,6 +600,7 @@ INSERT INTO images (
 	}')
 );
 
+-- Edinburgh
 INSERT INTO images (
 	acquisition_date_start,
 	acquisition_date_end,

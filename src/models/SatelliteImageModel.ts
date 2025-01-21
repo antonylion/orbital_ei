@@ -9,7 +9,7 @@ export class SatelliteImageModel {
      * @param filters - Filtering options (acquisition date, resolution, cloud coverage, etc.)
      * @param page - Page number for pagination
      * @param limit - Number of items per page
-     * @returns An object containing an array of orders and the total count
+     * @returns An array of satellite images and the total count
      */
     async getAll(filters: SatelliteImageFilters, page: number, limit: number): Promise<{ data: SatelliteImage[], total: number }> {
 
@@ -109,9 +109,9 @@ export class SatelliteImageModel {
     }
 
     /**
-     * Retrieve all images with optional filters, pagination, and total count
+     * Retrieve the SatelliteImage uniquely identified by id
      * @param id - Id of the image to be retrieved
-     * @returns An object containing a satellite image
+     * @returns A satellite image
      */
     async getById(id: number): Promise<SatelliteImage> {
         try {
