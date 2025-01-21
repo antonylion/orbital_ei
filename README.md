@@ -7,7 +7,7 @@ Orbital_EI is a fictional RESTful API designed for searching and ordering satell
 A production instance of Orbital_EI is running on Render. You can interact with the API using:
 - cURL commands
 - Your web browser
-- Our [Postman Collection](https://www.postman.com) (Postman account required)
+- Our [Postman Collection](https://orbitaledgeimagingantony.postman.co/workspace/orbital_edge_imaging_antony~4094f4ce-41f1-4c9b-83c6-df9bef37a5cc/collection/40922021-cb7a7320-4dc7-4ffc-845f-1f7927219b11?action=share&creator=40922021) (Postman account required)
 
 ### Example API Requests
 
